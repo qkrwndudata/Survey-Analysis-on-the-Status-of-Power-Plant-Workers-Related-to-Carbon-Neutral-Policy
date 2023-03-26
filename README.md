@@ -36,6 +36,7 @@
   - 그룹 내 집단 별 차이 확인: bonferroni 검정
   
   - 응답자 기관 별 노동자의 고용 불안감에 미치는 영향요인 분석: 구조방정식 모형(Structure Equation Model: SEM)
+  
   ![image](https://user-images.githubusercontent.com/79184083/227788107-8ad87e40-a68e-4698-b6f5-a5c3230408f4.png)
 
   
