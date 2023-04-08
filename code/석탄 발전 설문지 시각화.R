@@ -1,60 +1,61 @@
-#remove.packages("rlang")
-#install.packages("rlang")
+## ggplot ë° dplyrì„ ì‚¬ìš©í•´ ì„¤ë¬¸ì§€ ë¬¸í•­ì— ëŒ€í•œ ì‹œê°í™”ë¥¼ ì§„í–‰í•œ ì½”ë“œì…ë‹ˆë‹¤.
+
+# ë¼ì´ë¸ŒëŸ¬ë¦¬ 
 library(rlang)
 library(haven)
 library(ggplot2)
 library(dplyr)
 library(gridExtra)
 
-data <- read_spss("C:/Users/Park JuYoung/Desktop/¿¬±¸¼Ò/¼®Åº¹ßÀüº¸°í¼­/(0622)¿¡³ÊÁö ÀüÈ¯°ü·Ã Á¶ÇÕ¿ø ÀÎ½ÄÁ¶»ç_v1.SAV")
+data <- read_spss("C:/Users/Park JuYoung/Desktop/ì—°êµ¬ì†Œ/ì„íƒ„ë°œì „ë³´ê³ ì„œ/(0622)ì—ë„ˆì§€ ì „í™˜ê´€ë ¨ ì¡°í•©ì› ì¸ì‹ì¡°ì‚¬_v1.SAV")
 
 names(data)
 dim(data)
 
-data$q1_6 <- ifelse(is.na(data$q1_6), "ÇØ´ç¾øÀ½", data$q1_6)
+data$q1_6 <- ifelse(is.na(data$q1_6), "í•´ë‹¹ì—†ìŒ", data$q1_6)
 
 data <- data %>% 
-  select(-("ÀÌ¸§":"¿¬¶ôÃ³")) %>%
-  rename("¼ºº°" = "q1_1",
-         "¿¬·É´ë" = "q1_2",
-         "ÇĞ·Â" = "q1_3",
-         "±Ù¼Ó³â¼ö" = "q1_4",
-         "¼Ò¼ÓÈ¸»ç" = "q1_5",
-         "±Ù¹«Ã³" = "q1_6",
-         "±Ù¹«Áö¿ª" = "q1_7",
-         "Á÷Á¾" = "q1_8")
+  select(-("ì´ë¦„":"ì—°ë½ì²˜")) %>%
+  rename("ì„±ë³„" = "q1_1",
+         "ì—°ë ¹ëŒ€" = "q1_2",
+         "í•™ë ¥" = "q1_3",
+         "ê·¼ì†ë…„ìˆ˜" = "q1_4",
+         "ì†Œì†íšŒì‚¬" = "q1_5",
+         "ê·¼ë¬´ì²˜" = "q1_6",
+         "ê·¼ë¬´ì§€ì—­" = "q1_7",
+         "ì§ì¢…" = "q1_8")
 
-data$¼ºº° <- as.factor(data$¼ºº°)
-table(data$¼ºº°)
-levels(data$¼ºº°) <- c("³²", "¿©")
+data$ì„±ë³„ <- as.factor(data$ì„±ë³„)
+table(data$ì„±ë³„)
+levels(data$ì„±ë³„) <- c("ë‚¨", "ì—¬")
 
-data$¿¬·É´ë <- as.factor(data$¿¬·É´ë)
-table(data$¿¬·É´ë)
-levels(data$¿¬·É´ë) <- c("20´ë", "30´ë", "40´ë", "50´ë", "60´ë ÀÌ»ó")
+data$ì—°ë ¹ëŒ€ <- as.factor(data$ì—°ë ¹ëŒ€)
+table(data$ì—°ë ¹ëŒ€)
+levels(data$ì—°ë ¹ëŒ€) <- c("20ëŒ€", "30ëŒ€", "40ëŒ€", "50ëŒ€", "60ëŒ€ ì´ìƒ")
 
-data$ÇĞ·Â <- as.factor(data$ÇĞ·Â)
-table(data$ÇĞ·Â)
-levels(data$ÇĞ·Â) <- c("ÁßÇĞ±³ Á¹¾÷ ÀÌÇÏ", "°íµîÇĞ±³ Á¹¾÷", "Àü¹®´ë Á¹¾÷", "´ëÇĞ±³ Á¹¾÷", "´ëÇĞ¿ø Á¹¾÷")
+data$í•™ë ¥ <- as.factor(data$í•™ë ¥)
+table(data$í•™ë ¥)
+levels(data$í•™ë ¥) <- c("ì¤‘í•™êµ ì¡¸ì—… ì´í•˜", "ê³ ë“±í•™êµ ì¡¸ì—…", "ì „ë¬¸ëŒ€ ì¡¸ì—…", "ëŒ€í•™êµ ì¡¸ì—…", "ëŒ€í•™ì› ì¡¸ì—…")
 
-data$±Ù¼Ó³â¼ö <- as.factor(data$±Ù¼Ó³â¼ö)
-table(data$±Ù¼Ó³â¼ö)
-levels(data$±Ù¼Ó³â¼ö) <- c("1³â ¹Ì¸¸", "1~5³â", "5~10³â", "10~20³â", "20³â ÀÌ»ó")
+data$ê·¼ì†ë…„ìˆ˜ <- as.factor(data$ê·¼ì†ë…„ìˆ˜)
+table(data$ê·¼ì†ë…„ìˆ˜)
+levels(data$ê·¼ì†ë…„ìˆ˜) <- c("1ë…„ ë¯¸ë§Œ", "1~5ë…„", "5~10ë…„", "10~20ë…„", "20ë…„ ì´ìƒ")
 
-data$¼Ò¼ÓÈ¸»ç <- as.factor(data$¼Ò¼ÓÈ¸»ç)
-table(data$¼Ò¼ÓÈ¸»ç)
-levels(data$¼Ò¼ÓÈ¸»ç) <- c("¹ßÀü°ø±â¾÷", "ÇÑÀüKPS", "ÇÑÀü»ê¾÷°³¹ß", "¹ßÀüÀÚÈ¸»ç")
+data$ì†Œì†íšŒì‚¬ <- as.factor(data$ì†Œì†íšŒì‚¬)
+table(data$ì†Œì†íšŒì‚¬)
+levels(data$ì†Œì†íšŒì‚¬) <- c("ë°œì „ê³µê¸°ì—…", "í•œì „KPS", "í•œì „ì‚°ì—…ê°œë°œ", "ë°œì „ìíšŒì‚¬")
 
-data$±Ù¹«Ã³ <- as.factor(data$±Ù¹«Ã³)
-table(data$±Ù¹«Ã³)
-levels(data$±Ù¹«Ã³) <- c("³²µ¿¹ßÀü", "³²ºÎ¹ßÀü", "¼­ºÎ¹ßÀü", "ÁßºÎ¹ßÀü", "µ¿¼­¹ßÀü", "ÇØ´ç¾øÀ½")
+data$ê·¼ë¬´ì²˜ <- as.factor(data$ê·¼ë¬´ì²˜)
+table(data$ê·¼ë¬´ì²˜)
+levels(data$ê·¼ë¬´ì²˜) <- c("ë‚¨ë™ë°œì „", "ë‚¨ë¶€ë°œì „", "ì„œë¶€ë°œì „", "ì¤‘ë¶€ë°œì „", "ë™ì„œë°œì „", "í•´ë‹¹ì—†ìŒ")
 
-data$±Ù¹«Áö¿ª <- as.factor(data$±Ù¹«Áö¿ª)
-table(data$±Ù¹«Áö¿ª)
-levels(data$±Ù¹«Áö¿ª) <- c("¼öµµ±Ç", "¼­ÇØ±Ç", "³²ÇØ±Ç", "µ¿ÇØ±Ç", "ºÎ»ê¿ï»ê±Ç", "Á¦ÁÖµµ", "±âÅ¸")
+data$ê·¼ë¬´ì§€ì—­ <- as.factor(data$ê·¼ë¬´ì§€ì—­)
+table(data$ê·¼ë¬´ì§€ì—­)
+levels(data$ê·¼ë¬´ì§€ì—­) <- c("ìˆ˜ë„ê¶Œ", "ì„œí•´ê¶Œ", "ë‚¨í•´ê¶Œ", "ë™í•´ê¶Œ", "ë¶€ì‚°ìš¸ì‚°ê¶Œ", "ì œì£¼ë„", "ê¸°íƒ€")
 
-data$Á÷Á¾ <- as.factor(data$Á÷Á¾)
-table(data$Á÷Á¾)
-levels(data$Á÷Á¾) <- c("»ç¹«", "±â°è", "Àü±â", "È­ÇĞ", "È¯°æ¹ÌÈ­", "°æºñ", "±âÅ¸")
+data$ì§ì¢… <- as.factor(data$ì§ì¢…)
+table(data$ì§ì¢…)
+levels(data$ì§ì¢…) <- c("ì‚¬ë¬´", "ê¸°ê³„", "ì „ê¸°", "í™”í•™", "í™˜ê²½ë¯¸í™”", "ê²½ë¹„", "ê¸°íƒ€")
 
 
 
@@ -68,61 +69,61 @@ summary(data)
 
 
 
-### ±âº»ÀûÀÎ EDA ###
+### ê¸°ë³¸ì ì¸ EDA ###
 data %>% 
-  group_by(¼ºº°) %>%
+  group_by(ì„±ë³„) %>%
   summarise(n = n()) %>%
   mutate(total = sum(n),
     pct = paste(round(n/total*100,1), "%")) %>%
-  ggplot(aes(x = "", y = n, fill = ¼ºº°)) + 
+  ggplot(aes(x = "", y = n, fill = ì„±ë³„)) + 
   geom_col(color = "black") + 
   geom_text(aes(label = pct),
             position = position_stack(vjust = 0.5)) +
   coord_polar(theta = "y") +
-  labs(title = "¹ßÀü¼Ò ³ëµ¿ÀÚ ¼ºº° ºĞÆ÷") + 
+  labs(title = "ë°œì „ì†Œ ë…¸ë™ì ì„±ë³„ ë¶„í¬") + 
   theme_void() +
   theme(plot.title = element_text(size = 16, hjust = 0.5))
 
 data %>% 
-  group_by(¿¬·É´ë) %>%
+  group_by(ì—°ë ¹ëŒ€) %>%
   summarise(n = n()) %>%
   mutate(total = sum(n),
          pct = paste(round(n/total*100,1), "%")) %>%
-  ggplot(aes(x = "", y = n, fill = ¿¬·É´ë)) + 
+  ggplot(aes(x = "", y = n, fill = ì—°ë ¹ëŒ€)) + 
   geom_col(color = "black") + 
   geom_text(aes(label = pct),
             position = position_stack(vjust = 0.4)) +
   coord_polar(theta = "y") +
-  labs(title = "¹ßÀü¼Ò ³ëµ¿ÀÚ ¿¬·É´ë ºĞÆ÷") + 
+  labs(title = "ë°œì „ì†Œ ë…¸ë™ì ì—°ë ¹ëŒ€ ë¶„í¬") + 
   theme_void() +
   theme(plot.title = element_text(size = 16, hjust = 0.5))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   summarise(n = n()) %>%
   mutate(total = sum(n),
          pct = paste(round(n/total*100,1), "%")) %>%
-  ggplot(aes(x = "", y = n, fill = ¼Ò¼ÓÈ¸»ç)) + 
+  ggplot(aes(x = "", y = n, fill = ì†Œì†íšŒì‚¬)) + 
   geom_col(color = "black") + 
   geom_text(aes(x = 1.1, label = pct),
             position = position_stack(vjust = 0.6)) +
   coord_polar(theta = "y") +
-  labs(title = "¹ßÀü¼Ò ³ëµ¿ÀÚ ¼Ò¼ÓÈ¸»ç ºĞÆ÷") + 
+  labs(title = "ë°œì „ì†Œ ë…¸ë™ì ì†Œì†íšŒì‚¬ ë¶„í¬") + 
   theme_void() +
   theme(plot.title = element_text(size = 16, hjust = 0.5),
         legend.text=element_text(size=10))
 
 data %>% 
-  group_by(±Ù¹«Ã³) %>%
+  group_by(ê·¼ë¬´ì²˜) %>%
   summarise(n = n()) %>%
   mutate(total = sum(n),
          pct = paste(round(n/total*100,1), "%")) %>%
-  ggplot(aes(x = "", y = n, fill = ±Ù¹«Ã³)) + 
+  ggplot(aes(x = "", y = n, fill = ê·¼ë¬´ì²˜)) + 
   geom_col(color = "black") + 
   geom_text(aes(label = pct),
             position = position_stack(vjust = 0.5)) +
   coord_polar(theta = "y") +
-  labs(title = "¹ßÀü°ø±â¾÷ ³ëµ¿ÀÚ ±Ù¹«Ã³ ºĞÆ÷") + 
+  labs(title = "ë°œì „ê³µê¸°ì—… ë…¸ë™ì ê·¼ë¬´ì²˜ ë¶„í¬") + 
   theme_void() +
   theme(plot.title = element_text(size = 16, hjust = 0.5),
         legend.text=element_text(size=10))
@@ -130,59 +131,59 @@ data %>%
 
 
 data %>% 
-  group_by(ÇĞ·Â) %>%
+  group_by(í•™ë ¥) %>%
   summarise(n = n()) %>%
   mutate(total = sum(n),
          pct = paste(round(n/total*100,1), "%")) %>%
-  ggplot(aes(x = "", y = n, fill = ÇĞ·Â)) + 
+  ggplot(aes(x = "", y = n, fill = í•™ë ¥)) + 
   geom_col(color = "black") + 
   geom_text(aes(label = pct),
             position = position_stack(vjust = 0.5),
             check_overlap = T) +
   coord_polar(theta = "y") +
-  labs(title = "¹ßÀü¼Ò ³ëµ¿ÀÚ ÇĞ·Â ºĞÆ÷") + 
+  labs(title = "ë°œì „ì†Œ ë…¸ë™ì í•™ë ¥ ë¶„í¬") + 
   theme_void() +
   theme(plot.title = element_text(size = 16, hjust = 0.5))
 
   data %>% 
-  group_by(±Ù¼Ó³â¼ö) %>%
+  group_by(ê·¼ì†ë…„ìˆ˜) %>%
   summarise(n = n()) %>%
   mutate(total = sum(n),
          pct = paste(round(n/total*100,1), "%")) %>%
-  ggplot(aes(x = "", y = n, fill = ±Ù¼Ó³â¼ö)) + 
+  ggplot(aes(x = "", y = n, fill = ê·¼ì†ë…„ìˆ˜)) + 
   geom_col(color = "black") + 
   geom_text(aes(label = pct),
             position = position_stack(vjust = 0.5)) +
   coord_polar(theta = "y") +
-  labs(title = "¹ßÀü¼Ò ³ëµ¿ÀÚ ±Ù¼Ó³â¼ö ºĞÆ÷") + 
+  labs(title = "ë°œì „ì†Œ ë…¸ë™ì ê·¼ì†ë…„ìˆ˜ ë¶„í¬") + 
   theme_void() +
   theme(plot.title = element_text(size = 16, hjust = 0.5))
 
 data %>% 
-  group_by(±Ù¹«Áö¿ª) %>%
+  group_by(ê·¼ë¬´ì§€ì—­) %>%
   summarise(n = n()) %>%
   mutate(total = sum(n),
          pct = paste(round(n/total*100,1), "%")) %>%
-  ggplot(aes(x = "", y = n, fill = ±Ù¹«Áö¿ª)) + 
+  ggplot(aes(x = "", y = n, fill = ê·¼ë¬´ì§€ì—­)) + 
   geom_col(color = "black") + 
   geom_text(aes(label = pct),
             position = position_stack(vjust = 0.6)) +
   coord_polar(theta = "y") +
-  labs(title = "¹ßÀü¼Ò ³ëµ¿ÀÚ ±Ù¹«Áö¿ª ºĞÆ÷") + 
+  labs(title = "ë°œì „ì†Œ ë…¸ë™ì ê·¼ë¬´ì§€ì—­ ë¶„í¬") + 
   theme_void() +
   theme(plot.title = element_text(size = 16, hjust = 0.5))
 
 data %>% 
-  group_by(Á÷Á¾) %>%
+  group_by(ì§ì¢…) %>%
   summarise(n = n()) %>%
   mutate(total = sum(n),
          pct = paste(round(n/total*100,1), "%")) %>%
-  ggplot(aes(x = "", y = n, fill = Á÷Á¾)) + 
+  ggplot(aes(x = "", y = n, fill = ì§ì¢…)) + 
   geom_col(color = "black") + 
   geom_text(aes(label = pct),
             position = position_stack(vjust = 0.5)) +
   coord_polar(theta = "y") +
-  labs(title = "¹ßÀü¼Ò ³ëµ¿ÀÚ Á÷Á¾ ºĞÆ÷") + 
+  labs(title = "ë°œì „ì†Œ ë…¸ë™ì ì§ì¢… ë¶„í¬") + 
   theme_void() +
   theme(plot.title = element_text(size = 16, hjust = 0.5))
 
@@ -193,25 +194,25 @@ data %>%
   ggplot(aes(x = q2_1)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. ±âÈÄÀ§±â´Â ½É°¢ÇÑ »çÈ¸¹®Á¦·Î Á¤ºÎ Â÷¿øÀÇ Àû±Ø ´ëÀÀÀÌ ÇÊ¿äÇÏ´Ù") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ê¸°í›„ìœ„ê¸°ëŠ” ì‹¬ê°í•œ ì‚¬íšŒë¬¸ì œë¡œ ì •ë¶€ ì°¨ì›ì˜ ì ê·¹ ëŒ€ì‘ì´ í•„ìš”í•˜ë‹¤") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q2_1) %>%
+  group_by(ì†Œì†íšŒì‚¬, q2_1) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q2_1, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q2_1, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.5) +
-  ggtitle("Q. ±âÈÄÀ§±â´Â ½É°¢ÇÑ »çÈ¸¹®Á¦·Î Á¤ºÎ Â÷¿øÀÇ Àû±Ø ´ëÀÀÀÌ ÇÊ¿äÇÏ´Ù") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ê¸°í›„ìœ„ê¸°ëŠ” ì‹¬ê°í•œ ì‚¬íšŒë¬¸ì œë¡œ ì •ë¶€ ì°¨ì›ì˜ ì ê·¹ ëŒ€ì‘ì´ í•„ìš”í•˜ë‹¤") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -220,7 +221,7 @@ data %>%
   guides(color = guide_legend(label.position = "bottom"))
 
 
-# ÆùÆ® ¼öÁ¤ÇÏ±â!
+# í°íŠ¸ ìˆ˜ì •í•˜ê¸°!
   
 
 ### Q2_2 ###
@@ -228,25 +229,25 @@ data %>%
   ggplot(aes(x = q2_1_n2)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. ±âÈÄÀ§±â´Â ÀÛ¾÷È¯°æ ¾ÇÈ­, ½Ç¾÷ ¹®Á¦ µî ³ëµ¿ÀÚ¿¡°Ô Å« ¿µÇâÀ» ¹ÌÄ¡°í ÀÖ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ê¸°í›„ìœ„ê¸°ëŠ” ì‘ì—…í™˜ê²½ ì•…í™”, ì‹¤ì—… ë¬¸ì œ ë“± ë…¸ë™ìì—ê²Œ í° ì˜í–¥ì„ ë¯¸ì¹˜ê³  ìˆë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q2_1_n2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q2_1_n2) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q2_1_n2, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q2_1_n2, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.7) +
-  ggtitle("Q. ±âÈÄÀ§±â´Â ÀÛ¾÷È¯°æ ¾ÇÈ­, ½Ç¾÷ ¹®Á¦ µî ³ëµ¿ÀÚ¿¡°Ô Å« ¿µÇâÀ» ¹ÌÄ¡°í ÀÖ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ê¸°í›„ìœ„ê¸°ëŠ” ì‘ì—…í™˜ê²½ ì•…í™”, ì‹¤ì—… ë¬¸ì œ ë“± ë…¸ë™ìì—ê²Œ í° ì˜í–¥ì„ ë¯¸ì¹˜ê³  ìˆë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -257,7 +258,7 @@ data %>%
 
 ### Q3_1 ###
 data$q3_1 <- as.factor(data$q3_1)
-data$q3_1 <- ifelse(data$q3_1 == 1, "³×", "¾Æ´Ï¿À")
+data$q3_1 <- ifelse(data$q3_1 == 1, "ë„¤", "ì•„ë‹ˆì˜¤")
 
 a <- data %>% 
   group_by(q3_1) %>%
@@ -269,15 +270,15 @@ a <- data %>%
   geom_text(aes(label = pct),
             position = position_stack(vjust = 0.5)) +
   coord_polar(theta = "y") +
-  labs(title = "Q. Á¤ºÎ°¡ ¹ßÇ¥ÇÑ \n ¡®2050 Åº¼ÒÁß¸³¡¯ Á¤Ã¥ ¼±¾ğ¿¡ ´ëÇØ µé¾îº» ÀûÀÌ ÀÖ´Ù.") + 
+  labs(title = "Q. ì •ë¶€ê°€ ë°œí‘œí•œ \n â€˜2050 íƒ„ì†Œì¤‘ë¦½â€™ ì •ì±… ì„ ì–¸ì— ëŒ€í•´ ë“¤ì–´ë³¸ ì ì´ ìˆë‹¤.") + 
   theme_void() +
   theme(plot.title = element_text(size = 13, hjust = 0.5))+
-  guides(fill = guide_legend(title = "ÀÀ´ä"))
+  guides(fill = guide_legend(title = "ì‘ë‹µ"))
 
 
 ### Q3_1_n2 ###
 data$q3_1_n2 <- as.factor(data$q3_1_n2)
-data$q3_1_n2 <- ifelse(data$q3_1_n2 == 1, "³×", "¾Æ´Ï¿À")
+data$q3_1_n2 <- ifelse(data$q3_1_n2 == 1, "ë„¤", "ì•„ë‹ˆì˜¤")
 
 b <- data %>% 
   group_by(q3_1_n2) %>%
@@ -289,10 +290,10 @@ b <- data %>%
   geom_text(aes(label = pct),
             position = position_stack(vjust = 0.5)) +
   coord_polar(theta = "y") +
-  labs(title = "Q. 2022³â 3¿ù 25ÀÏ ½ÃÇàµÈ ±âÈÄ À§±â ´ëÀÀÀ» À§ÇÑ \n ¡®Åº¼ÒÁß¸³¡¤³ì»ö¼ºÀå±âº»¹ı¡¯¿¡ ´ëÇØ ¾Ë°í ÀÖ´Ù.") + 
+  labs(title = "Q. 2022ë…„ 3ì›” 25ì¼ ì‹œí–‰ëœ ê¸°í›„ ìœ„ê¸° ëŒ€ì‘ì„ ìœ„í•œ \n â€˜íƒ„ì†Œì¤‘ë¦½Â·ë…¹ìƒ‰ì„±ì¥ê¸°ë³¸ë²•â€™ì— ëŒ€í•´ ì•Œê³  ìˆë‹¤.") + 
   theme_void() +
   theme(plot.title = element_text(size = 13, hjust = 0.5))+
-  guides(fill = guide_legend(title = "ÀÀ´ä"))
+  guides(fill = guide_legend(title = "ì‘ë‹µ"))
 
 grid.arrange(a,b, nrow=1, ncol=2)
 
@@ -301,25 +302,25 @@ data %>%
   ggplot(aes(x = q3_2)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. À§ÀÇ Á¤º¸¸¦ ¾Ë°í ÀÖ´Ù¸é ¾î¶»°Ô ¾Ë°Ô µÇ¾ú½À´Ï±î?") +
-  scale_x_continuous(breaks = c(1:7), label = c("½Å¹®, ÀÎÅÍ³İ µî ¸Ş½ºÄÄ", "Á÷Àå µ¿·á", "È¸»ç °ü¸®ÀÚ", "³ëµ¿Á¶ÇÕ", "Áö¿ª ÁÖ¹Î", "À§ÀÇ Á¤º¸¸¦ ¸ğ¸¥´Ù", "±âÅ¸")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ìœ„ì˜ ì •ë³´ë¥¼ ì•Œê³  ìˆë‹¤ë©´ ì–´ë–»ê²Œ ì•Œê²Œ ë˜ì—ˆìŠµë‹ˆê¹Œ?") +
+  scale_x_continuous(breaks = c(1:7), label = c("ì‹ ë¬¸, ì¸í„°ë„· ë“± ë©”ìŠ¤ì»´", "ì§ì¥ ë™ë£Œ", "íšŒì‚¬ ê´€ë¦¬ì", "ë…¸ë™ì¡°í•©", "ì§€ì—­ ì£¼ë¯¼", "ìœ„ì˜ ì •ë³´ë¥¼ ëª¨ë¥¸ë‹¤", "ê¸°íƒ€")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q3_2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q3_2) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q3_2, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q3_2, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. À§ÀÇ Á¤º¸¸¦ ¾Ë°í ÀÖ´Ù¸é ¾î¶»°Ô ¾Ë°Ô µÇ¾ú½À´Ï±î?") +
-  scale_x_continuous(breaks = c(1:7), label = c("½Å¹®, ÀÎÅÍ³İ µî ¸Ş½ºÄÄ", "Á÷Àå µ¿·á", "È¸»ç °ü¸®ÀÚ", "³ëµ¿Á¶ÇÕ", "Áö¿ª ÁÖ¹Î", "À§ÀÇ Á¤º¸¸¦ ¸ğ¸¥´Ù", "±âÅ¸")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ìœ„ì˜ ì •ë³´ë¥¼ ì•Œê³  ìˆë‹¤ë©´ ì–´ë–»ê²Œ ì•Œê²Œ ë˜ì—ˆìŠµë‹ˆê¹Œ?") +
+  scale_x_continuous(breaks = c(1:7), label = c("ì‹ ë¬¸, ì¸í„°ë„· ë“± ë©”ìŠ¤ì»´", "ì§ì¥ ë™ë£Œ", "íšŒì‚¬ ê´€ë¦¬ì", "ë…¸ë™ì¡°í•©", "ì§€ì—­ ì£¼ë¯¼", "ìœ„ì˜ ì •ë³´ë¥¼ ëª¨ë¥¸ë‹¤", "ê¸°íƒ€")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -328,32 +329,32 @@ data %>%
   guides(color = guide_legend(label.position = "bottom"))
 
 
-# 3-3, 3-4 ¾øÀ½!
+# 3-3, 3-4 ì—†ìŒ!
 
 ### Q4_1 ###
 data %>%
   ggplot(aes(x = q4_1)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. ¡®2050 Åº¼ÒÁß¸³¡¯ Á¤Ã¥°ú Åº¼ÒÁß¸³¡¤³ì»ö¼ºÀå±âº»¹ıÀÇ ÃëÁö ¹× ÇÊ¿ä¼º¿¡ °ø°¨ÇÑ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. â€˜2050 íƒ„ì†Œì¤‘ë¦½â€™ ì •ì±…ê³¼ íƒ„ì†Œì¤‘ë¦½Â·ë…¹ìƒ‰ì„±ì¥ê¸°ë³¸ë²•ì˜ ì·¨ì§€ ë° í•„ìš”ì„±ì— ê³µê°í•œë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q4_1) %>%
+  group_by(ì†Œì†íšŒì‚¬, q4_1) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q4_1, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q4_1, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. ¡®2050 Åº¼ÒÁß¸³¡¯ Á¤Ã¥°ú Åº¼ÒÁß¸³¡¤³ì»ö¼ºÀå±âº»¹ıÀÇ ÃëÁö ¹× ÇÊ¿ä¼º¿¡ °ø°¨ÇÑ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. â€˜2050 íƒ„ì†Œì¤‘ë¦½â€™ ì •ì±…ê³¼ íƒ„ì†Œì¤‘ë¦½Â·ë…¹ìƒ‰ì„±ì¥ê¸°ë³¸ë²•ì˜ ì·¨ì§€ ë° í•„ìš”ì„±ì— ê³µê°í•œë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -367,25 +368,25 @@ data %>%
   ggplot(aes(x = q4_1_n2)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. ¡®2050 Åº¼ÒÁß¸³ Á¤Ã¥¡¯Àº Çö½ÇÀûÀ¸·Î ½ÇÇö °¡´ÉÇÑ Á¤Ã¥ÀÌ¶ó°í »ı°¢ÇÑ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. â€˜2050 íƒ„ì†Œì¤‘ë¦½ ì •ì±…â€™ì€ í˜„ì‹¤ì ìœ¼ë¡œ ì‹¤í˜„ ê°€ëŠ¥í•œ ì •ì±…ì´ë¼ê³  ìƒê°í•œë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q4_1_n2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q4_1_n2) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q4_1_n2, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q4_1_n2, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. ¡®2050 Åº¼ÒÁß¸³ Á¤Ã¥¡¯Àº Çö½ÇÀûÀ¸·Î ½ÇÇö °¡´ÉÇÑ Á¤Ã¥ÀÌ¶ó°í »ı°¢ÇÑ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. â€˜2050 íƒ„ì†Œì¤‘ë¦½ ì •ì±…â€™ì€ í˜„ì‹¤ì ìœ¼ë¡œ ì‹¤í˜„ ê°€ëŠ¥í•œ ì •ì±…ì´ë¼ê³  ìƒê°í•œë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -393,22 +394,22 @@ data %>%
         legend.position = "bottom") +
   guides(color = guide_legend(label.position = "bottom"))
 
-# 4-2 ¾øÀ½!
+# 4-2 ì—†ìŒ!
 
 
 
 ### Q5_1 
 data1 <- data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q5_1) %>%
+  group_by(ì†Œì†íšŒì‚¬, q5_1) %>%
   summarise(total = n())
 
 data2 <- data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q5_1_m2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q5_1_m2) %>%
   summarise(total = n()) %>%
   rename("q5_1" = "q5_1_m2")
 
 data3 <- data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q5_1_m3) %>%
+  group_by(ì†Œì†íšŒì‚¬, q5_1_m3) %>%
   summarise(total = n()) %>%
   rename("q5_1" = "q5_1_m3")
 
@@ -427,25 +428,25 @@ data5_1_sum %>%
   ggplot(aes(x = q5_1, y = pct)) +
   geom_bar(stat = "identity", fill = "blue", colour = "black") + 
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.25) +
-  ggtitle("Q. 2030 NDC Á¤Ã¥¿¡ µû¶ó ¼®ÅºÈ­·Â¹ßÀü¼Ò°¡ ´Ü°èÀûÀ¸·Î Æó¼âµÉ ¿¹Á¤ÀÔ´Ï´Ù. \n ÀÌ¿¡ µû¶ó ³ªÅ¸³¯ ¹®Á¦ Áß °¡Àå °ÆÁ¤µÇ´Â ¹®Á¦ ¼¼ °³¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä. ") +
-  scale_x_continuous(breaks = c(1:6), labels = c("Àç»ı ¿¡³ÊÁö °³¹ß¿¡ µû¸¥ È¯°æÈÑ¼Õ", "°æÁ¦¼ºÀå µĞÈ­", "Àü±â ¿ä±İ »ó½Â", "Àü±â °ø±ŞÀÇ ºÒ¾ÈÁ¤¼º", "Åõ¸íÇÑ Á¤º¸°ø°³ ¹× ¼ÒÅë", "ÀÏÀÚ¸® ¹®Á¦(½Ç¾÷ µî)")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. 2030 NDC ì •ì±…ì— ë”°ë¼ ì„íƒ„í™”ë ¥ë°œì „ì†Œê°€ ë‹¨ê³„ì ìœ¼ë¡œ íì‡„ë  ì˜ˆì •ì…ë‹ˆë‹¤. \n ì´ì— ë”°ë¼ ë‚˜íƒ€ë‚  ë¬¸ì œ ì¤‘ ê°€ì¥ ê±±ì •ë˜ëŠ” ë¬¸ì œ ì„¸ ê°œë¥¼ ì„ íƒí•´ ì£¼ì„¸ìš”. ") +
+  scale_x_continuous(breaks = c(1:6), labels = c("ì¬ìƒ ì—ë„ˆì§€ ê°œë°œì— ë”°ë¥¸ í™˜ê²½í›¼ì†", "ê²½ì œì„±ì¥ ë‘”í™”", "ì „ê¸° ìš”ê¸ˆ ìƒìŠ¹", "ì „ê¸° ê³µê¸‰ì˜ ë¶ˆì•ˆì •ì„±", "íˆ¬ëª…í•œ ì •ë³´ê³µê°œ ë° ì†Œí†µ", "ì¼ìë¦¬ ë¬¸ì œ(ì‹¤ì—… ë“±)")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 12))
 
 data5_1 %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q5_1) %>%
+  group_by(ì†Œì†íšŒì‚¬, q5_1) %>%
   summarise(total = sum(total))%>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total))%>%
-  ggplot(aes(x = q5_1, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q5_1, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. 2030 NDC Á¤Ã¥¿¡ µû¶ó ¼®ÅºÈ­·Â¹ßÀü¼Ò°¡ ´Ü°èÀûÀ¸·Î Æó¼âµÉ ¿¹Á¤ÀÔ´Ï´Ù. \n ÀÌ¿¡ µû¶ó ³ªÅ¸³¯ ¹®Á¦ Áß °¡Àå °ÆÁ¤µÇ´Â ¹®Á¦ ¼¼ °³¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä. ") +
-  scale_x_continuous(breaks = c(1:6), labels = c("Àç»ı ¿¡³ÊÁö °³¹ß¿¡ µû¸¥ È¯°æÈÑ¼Õ", "°æÁ¦¼ºÀå µĞÈ­", "Àü±â ¿ä±İ »ó½Â", "Àü±â °ø±ŞÀÇ ºÒ¾ÈÁ¤¼º", "Åõ¸íÇÑ Á¤º¸°ø°³ ¹× ¼ÒÅë", "ÀÏÀÚ¸® ¹®Á¦(½Ç¾÷ µî)")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. 2030 NDC ì •ì±…ì— ë”°ë¼ ì„íƒ„í™”ë ¥ë°œì „ì†Œê°€ ë‹¨ê³„ì ìœ¼ë¡œ íì‡„ë  ì˜ˆì •ì…ë‹ˆë‹¤. \n ì´ì— ë”°ë¼ ë‚˜íƒ€ë‚  ë¬¸ì œ ì¤‘ ê°€ì¥ ê±±ì •ë˜ëŠ” ë¬¸ì œ ì„¸ ê°œë¥¼ ì„ íƒí•´ ì£¼ì„¸ìš”. ") +
+  scale_x_continuous(breaks = c(1:6), labels = c("ì¬ìƒ ì—ë„ˆì§€ ê°œë°œì— ë”°ë¥¸ í™˜ê²½í›¼ì†", "ê²½ì œì„±ì¥ ë‘”í™”", "ì „ê¸° ìš”ê¸ˆ ìƒìŠ¹", "ì „ê¸° ê³µê¸‰ì˜ ë¶ˆì•ˆì •ì„±", "íˆ¬ëª…í•œ ì •ë³´ê³µê°œ ë° ì†Œí†µ", "ì¼ìë¦¬ ë¬¸ì œ(ì‹¤ì—… ë“±)")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -461,25 +462,25 @@ data %>%
   ggplot(aes(x = q5_2)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. Á¤ºÎ Á¤Ã¥¿¡ µû¶ó 2034³â±îÁö 30±âÀÇ ¼®ÅºÈ­·Â¹ßÀü¼Ò°¡ Æó¼âµË´Ï´Ù. \n ÀÌ¿¡ ´ëÇØ ±ÍÇÏ°¡ ´À³¢´Â °í¿ë À§±â ¹× ºÒ¾È°¨Àº ¾î¶°ÇÏ½Ê´Ï±î.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ½É°¢ÇÏÁö ¾Ê´Ù", "½É°¢ÇÏÁö ¾Ê´Ù", "º¸ÅëÀÌ´Ù", "½É°¢ÇÏ´Ù", "¸Å¿ì ½É°¢ÇÏ´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì •ë¶€ ì •ì±…ì— ë”°ë¼ 2034ë…„ê¹Œì§€ 30ê¸°ì˜ ì„íƒ„í™”ë ¥ë°œì „ì†Œê°€ íì‡„ë©ë‹ˆë‹¤. \n ì´ì— ëŒ€í•´ ê·€í•˜ê°€ ëŠë¼ëŠ” ê³ ìš© ìœ„ê¸° ë° ë¶ˆì•ˆê°ì€ ì–´ë– í•˜ì‹­ë‹ˆê¹Œ.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ì‹¬ê°í•˜ì§€ ì•Šë‹¤", "ì‹¬ê°í•˜ì§€ ì•Šë‹¤", "ë³´í†µì´ë‹¤", "ì‹¬ê°í•˜ë‹¤", "ë§¤ìš° ì‹¬ê°í•˜ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q5_2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q5_2) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q5_2, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q5_2, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. Á¤ºÎ Á¤Ã¥¿¡ µû¶ó 2034³â±îÁö 30±âÀÇ ¼®ÅºÈ­·Â¹ßÀü¼Ò°¡ Æó¼âµË´Ï´Ù. \n ÀÌ¿¡ ´ëÇØ ±ÍÇÏ°¡ ´À³¢´Â °í¿ë À§±â ¹× ºÒ¾È°¨Àº ¾î¶°ÇÏ½Ê´Ï±î.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ½É°¢ÇÏÁö ¾Ê´Ù", "½É°¢ÇÏÁö ¾Ê´Ù", "º¸ÅëÀÌ´Ù", "½É°¢ÇÏ´Ù", "¸Å¿ì ½É°¢ÇÏ´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì •ë¶€ ì •ì±…ì— ë”°ë¼ 2034ë…„ê¹Œì§€ 30ê¸°ì˜ ì„íƒ„í™”ë ¥ë°œì „ì†Œê°€ íì‡„ë©ë‹ˆë‹¤. \n ì´ì— ëŒ€í•´ ê·€í•˜ê°€ ëŠë¼ëŠ” ê³ ìš© ìœ„ê¸° ë° ë¶ˆì•ˆê°ì€ ì–´ë– í•˜ì‹­ë‹ˆê¹Œ.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ì‹¬ê°í•˜ì§€ ì•Šë‹¤", "ì‹¬ê°í•˜ì§€ ì•Šë‹¤", "ë³´í†µì´ë‹¤", "ì‹¬ê°í•˜ë‹¤", "ë§¤ìš° ì‹¬ê°í•˜ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -492,25 +493,25 @@ data %>%
   ggplot(aes(x = q5_3)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. ±ÍÇÏ°¡ ¼ÓÇÑ ¹ßÀü¼Ò¿¡¼­ Å»¼®Åº Á¤Ã¥À¸·Î ¾ğÁ¦ºÎÅÍ °í¿ë ¹®Á¦°¡ ¹ß»ıÇÒ °ÍÀ¸·Î ¿¹»óÇÏ½Ê´Ï±î.") +
-  scale_x_continuous(breaks = c(1:5), label = c("1³â ÀÌ³»", "2³â ~ 3³â", "3³â ~ 5³â", "5³â ~ 10³â", "10³â ÀÌ»ó")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ê·€í•˜ê°€ ì†í•œ ë°œì „ì†Œì—ì„œ íƒˆì„íƒ„ ì •ì±…ìœ¼ë¡œ ì–¸ì œë¶€í„° ê³ ìš© ë¬¸ì œê°€ ë°œìƒí•  ê²ƒìœ¼ë¡œ ì˜ˆìƒí•˜ì‹­ë‹ˆê¹Œ.") +
+  scale_x_continuous(breaks = c(1:5), label = c("1ë…„ ì´ë‚´", "2ë…„ ~ 3ë…„", "3ë…„ ~ 5ë…„", "5ë…„ ~ 10ë…„", "10ë…„ ì´ìƒ")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q5_3) %>%
+  group_by(ì†Œì†íšŒì‚¬, q5_3) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q5_3, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q5_3, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.5) +
-  ggtitle("Q. ±ÍÇÏ°¡ ¼ÓÇÑ ¹ßÀü¼Ò¿¡¼­ Å»¼®Åº Á¤Ã¥À¸·Î ¾ğÁ¦ºÎÅÍ °í¿ë ¹®Á¦°¡ ¹ß»ıÇÒ °ÍÀ¸·Î ¿¹»óÇÏ½Ê´Ï±î.") +
-  scale_x_continuous(breaks = c(1:5), label = c("1³â ÀÌ³»", "2³â ~ 3³â", "3³â ~ 5³â", "5³â ~ 10³â", "10³â ÀÌ»ó")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ê·€í•˜ê°€ ì†í•œ ë°œì „ì†Œì—ì„œ íƒˆì„íƒ„ ì •ì±…ìœ¼ë¡œ ì–¸ì œë¶€í„° ê³ ìš© ë¬¸ì œê°€ ë°œìƒí•  ê²ƒìœ¼ë¡œ ì˜ˆìƒí•˜ì‹­ë‹ˆê¹Œ.") +
+  scale_x_continuous(breaks = c(1:5), label = c("1ë…„ ì´ë‚´", "2ë…„ ~ 3ë…„", "3ë…„ ~ 5ë…„", "5ë…„ ~ 10ë…„", "10ë…„ ì´ìƒ")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -521,7 +522,7 @@ data %>%
 
 ### Q6_1
 data$q6_1 <- as.factor(data$q6_1)
-data$q6_1 <- ifelse(data$q6_1 == 1, "³×", "¾Æ´Ï¿À")
+data$q6_1 <- ifelse(data$q6_1 == 1, "ë„¤", "ì•„ë‹ˆì˜¤")
 
 a <- data %>% 
   group_by(q6_1) %>%
@@ -533,13 +534,13 @@ a <- data %>%
   geom_text(aes(label = pct),
             position = position_stack(vjust = 0.5)) +
   coord_polar(theta = "y") +
-  labs(title = "Q. ¡®Á¤ÀÇ·Î¿î ÀüÈ¯¡¯ÀÇ °³³äÀ» µé¾îº» ÀûÀÌ ÀÖ´Ù.") + 
+  labs(title = "Q. â€˜ì •ì˜ë¡œìš´ ì „í™˜â€™ì˜ ê°œë…ì„ ë“¤ì–´ë³¸ ì ì´ ìˆë‹¤.") + 
   theme_void() +
   theme(plot.title = element_text(size = 13, hjust = 0.5))+
-  guides(fill = guide_legend(title = "ÀÀ´ä"))
+  guides(fill = guide_legend(title = "ì‘ë‹µ"))
 
 data$q6_1_n2 <- as.factor(data$q6_1_n2)
-data$q6_1_n2 <- ifelse(data$q6_1_n2 == 1, "³×", "¾Æ´Ï¿À")
+data$q6_1_n2 <- ifelse(data$q6_1_n2 == 1, "ë„¤", "ì•„ë‹ˆì˜¤")
 
 b <- data %>% 
   group_by(q6_1_n2) %>%
@@ -551,10 +552,10 @@ b <- data %>%
   geom_text(aes(label = pct),
             position = position_stack(vjust = 0.5)) +
   coord_polar(theta = "y") +
-  labs(title = "Q. ¡®Á¤ºÎ°¡ ¡®Á¤ÀÇ·Î¿î ÀüÈ¯¡¯À» À§ÇØ \n ÃæºĞÇÑ ¼ÒÅëÀ» ÇÏ°í ÀÖ´Ù°í »ı°¢ÇÑ´Ù.") + 
+  labs(title = "Q. â€˜ì •ë¶€ê°€ â€˜ì •ì˜ë¡œìš´ ì „í™˜â€™ì„ ìœ„í•´ \n ì¶©ë¶„í•œ ì†Œí†µì„ í•˜ê³  ìˆë‹¤ê³  ìƒê°í•œë‹¤.") + 
   theme_void() +
   theme(plot.title = element_text(size = 13, hjust = 0.5))+
-  guides(fill = guide_legend(title = "ÀÀ´ä"))
+  guides(fill = guide_legend(title = "ì‘ë‹µ"))
 
 grid.arrange(a,b, nrow=1, ncol=2)
 
@@ -564,25 +565,25 @@ data %>%
   ggplot(aes(x = q6_2)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. Åº¼ÒÁß¸³ ±âº»¹ı¿¡ µû¶ó Á¤ºÎ´Â »ç¾÷ÀüÈ¯ ¹× ±¸Á¶Àû ½Ç¾÷¿¡ µû¸¥ ÇÇÇØ¸¦ ÃÖ¼ÒÈ­ÇÏ±â À§ÇØ \n Àç±³À°, ÀçÃë¾÷ ¹× ÀüÁ÷ µîÀ» Áö¿ø¹æ¾ÈÀ» ¸¶·ÃÇØ¾ß ÇÕ´Ï´Ù. \n ÀÌ·¯ÇÑ Á¤ºÎÀÇ Áö¿ø¹æ¾ÈÀÌ ±ÍÇÏÀÇ °í¿ëºÒ¾È ÇØ¼Ò¿¡ µµ¿òÀÌ µÇ¸®¶ó »ı°¢ÇÕ´Ï±î?") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. íƒ„ì†Œì¤‘ë¦½ ê¸°ë³¸ë²•ì— ë”°ë¼ ì •ë¶€ëŠ” ì‚¬ì—…ì „í™˜ ë° êµ¬ì¡°ì  ì‹¤ì—…ì— ë”°ë¥¸ í”¼í•´ë¥¼ ìµœì†Œí™”í•˜ê¸° ìœ„í•´ \n ì¬êµìœ¡, ì¬ì·¨ì—… ë° ì „ì§ ë“±ì„ ì§€ì›ë°©ì•ˆì„ ë§ˆë ¨í•´ì•¼ í•©ë‹ˆë‹¤. \n ì´ëŸ¬í•œ ì •ë¶€ì˜ ì§€ì›ë°©ì•ˆì´ ê·€í•˜ì˜ ê³ ìš©ë¶ˆì•ˆ í•´ì†Œì— ë„ì›€ì´ ë˜ë¦¬ë¼ ìƒê°í•©ë‹ˆê¹Œ?") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q6_2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q6_2) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q6_2, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q6_2, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. Åº¼ÒÁß¸³ ±âº»¹ı¿¡ µû¶ó Á¤ºÎ´Â »ç¾÷ÀüÈ¯ ¹× ±¸Á¶Àû ½Ç¾÷¿¡ µû¸¥ ÇÇÇØ¸¦ ÃÖ¼ÒÈ­ÇÏ±â À§ÇØ \n Àç±³À°, ÀçÃë¾÷ ¹× ÀüÁ÷ µîÀ» Áö¿ø¹æ¾ÈÀ» ¸¶·ÃÇØ¾ß ÇÕ´Ï´Ù. \n ÀÌ·¯ÇÑ Á¤ºÎÀÇ Áö¿ø¹æ¾ÈÀÌ ±ÍÇÏÀÇ °í¿ëºÒ¾È ÇØ¼Ò¿¡ µµ¿òÀÌ µÇ¸®¶ó »ı°¢ÇÕ´Ï±î?") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. íƒ„ì†Œì¤‘ë¦½ ê¸°ë³¸ë²•ì— ë”°ë¼ ì •ë¶€ëŠ” ì‚¬ì—…ì „í™˜ ë° êµ¬ì¡°ì  ì‹¤ì—…ì— ë”°ë¥¸ í”¼í•´ë¥¼ ìµœì†Œí™”í•˜ê¸° ìœ„í•´ \n ì¬êµìœ¡, ì¬ì·¨ì—… ë° ì „ì§ ë“±ì„ ì§€ì›ë°©ì•ˆì„ ë§ˆë ¨í•´ì•¼ í•©ë‹ˆë‹¤. \n ì´ëŸ¬í•œ ì •ë¶€ì˜ ì§€ì›ë°©ì•ˆì´ ê·€í•˜ì˜ ê³ ìš©ë¶ˆì•ˆ í•´ì†Œì— ë„ì›€ì´ ë˜ë¦¬ë¼ ìƒê°í•©ë‹ˆê¹Œ?") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -593,16 +594,16 @@ data %>%
 
 ### Q6_3
 data1 <- data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q6_3) %>%
+  group_by(ì†Œì†íšŒì‚¬, q6_3) %>%
   summarise(total = n())
   
 data2 <- data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q6_3_m2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q6_3_m2) %>%
   summarise(total = n()) %>%
   rename("q6_3" = "q6_3_m2")
 
 data3 <- data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q6_3_m3) %>%
+  group_by(ì†Œì†íšŒì‚¬, q6_3_m3) %>%
   summarise(total = n()) %>%
   rename("q6_3" = "q6_3_m3")
 
@@ -621,25 +622,25 @@ data6_3_sum %>%
   ggplot(aes(x = q6_3, y = pct)) +
   geom_bar(stat = "identity", fill = "blue", colour = "black") + 
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.25) +
-  ggtitle("Q. Á¤ÀÇ·Î¿î ÀüÈ¯ ¹× ±¸Á¶Á¶Á¤ ´ëºñ Á¤Ã¥ Áß \n °¡Àå ¿ì¼±ÀûÀÌ¶ó°í »ı°¢ÇÏ´Â Á¤Ã¥ ¼¼ °³¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä.") +
-  scale_x_continuous(breaks = c(1:9), labels = c("°í¿ë À¯Áö", "¹ßÀü¼Ò Á¤º¸ °øÀ¯", "Á÷¾÷ÈÆ·Ã Áö¿ø", "ÀüÈ¯¼ö´ç Áö±Ş", "½Ç¾÷±Ş¿© È®´ë", "»ıÈ°ºñ Áö¿ø", "»çÈ¸Àû ´ëÈ­ ±â±¸", "Ã³¿ì º¸Àå", "Á¤±ÔÁ÷ ÀüÈ¯")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì •ì˜ë¡œìš´ ì „í™˜ ë° êµ¬ì¡°ì¡°ì • ëŒ€ë¹„ ì •ì±… ì¤‘ \n ê°€ì¥ ìš°ì„ ì ì´ë¼ê³  ìƒê°í•˜ëŠ” ì •ì±… ì„¸ ê°œë¥¼ ì„ íƒí•´ ì£¼ì„¸ìš”.") +
+  scale_x_continuous(breaks = c(1:9), labels = c("ê³ ìš© ìœ ì§€", "ë°œì „ì†Œ ì •ë³´ ê³µìœ ", "ì§ì—…í›ˆë ¨ ì§€ì›", "ì „í™˜ìˆ˜ë‹¹ ì§€ê¸‰", "ì‹¤ì—…ê¸‰ì—¬ í™•ëŒ€", "ìƒí™œë¹„ ì§€ì›", "ì‚¬íšŒì  ëŒ€í™” ê¸°êµ¬", "ì²˜ìš° ë³´ì¥", "ì •ê·œì§ ì „í™˜")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 12))
 
 data6_3 %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q6_3) %>%
+  group_by(ì†Œì†íšŒì‚¬, q6_3) %>%
   summarise(total = sum(total))%>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total))%>%
-  ggplot(aes(x = q6_3, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q6_3, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. Á¤ÀÇ·Î¿î ÀüÈ¯ ¹× ±¸Á¶Á¶Á¤ ´ëºñ Á¤Ã¥ Áß \n °¡Àå ¿ì¼±ÀûÀÌ¶ó°í »ı°¢ÇÏ´Â Á¤Ã¥ ¼¼ °³¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä.") +
-  scale_x_continuous(breaks = c(1:9), labels = c("°í¿ë À¯Áö", "¹ßÀü¼Ò Á¤º¸ °øÀ¯", "Á÷¾÷ÈÆ·Ã Áö¿ø", "ÀüÈ¯¼ö´ç Áö±Ş", "½Ç¾÷±Ş¿© È®´ë", "»ıÈ°ºñ Áö¿ø", "»çÈ¸Àû ´ëÈ­ ±â±¸", "Ã³¿ì º¸Àå", "Á¤±ÔÁ÷ ÀüÈ¯")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì •ì˜ë¡œìš´ ì „í™˜ ë° êµ¬ì¡°ì¡°ì • ëŒ€ë¹„ ì •ì±… ì¤‘ \n ê°€ì¥ ìš°ì„ ì ì´ë¼ê³  ìƒê°í•˜ëŠ” ì •ì±… ì„¸ ê°œë¥¼ ì„ íƒí•´ ì£¼ì„¸ìš”.") +
+  scale_x_continuous(breaks = c(1:9), labels = c("ê³ ìš© ìœ ì§€", "ë°œì „ì†Œ ì •ë³´ ê³µìœ ", "ì§ì—…í›ˆë ¨ ì§€ì›", "ì „í™˜ìˆ˜ë‹¹ ì§€ê¸‰", "ì‹¤ì—…ê¸‰ì—¬ í™•ëŒ€", "ìƒí™œë¹„ ì§€ì›", "ì‚¬íšŒì  ëŒ€í™” ê¸°êµ¬", "ì²˜ìš° ë³´ì¥", "ì •ê·œì§ ì „í™˜")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -649,30 +650,30 @@ data6_3 %>%
 
 
 
-### Á¤ºÎ
+### ì •ë¶€
 data %>%
   ggplot(aes(x = q7_1)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. Á¤ºÎ´Â ¼®ÅºÈ­·Â¹ßÀü¼Ò Æó¼â¿¡ µû¸¥ ³ëµ¿ÀÚ °í¿ëºÒ¾È ÇØ¼Ò¿¡ \n ¾î´À Á¤µµ ³ë·ÂÇÏ°í ÀÖ´Ù°í »ı°¢ÇÕ´Ï±î?") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì •ë¶€ëŠ” ì„íƒ„í™”ë ¥ë°œì „ì†Œ íì‡„ì— ë”°ë¥¸ ë…¸ë™ì ê³ ìš©ë¶ˆì•ˆ í•´ì†Œì— \n ì–´ëŠ ì •ë„ ë…¸ë ¥í•˜ê³  ìˆë‹¤ê³  ìƒê°í•©ë‹ˆê¹Œ?") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_1) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_1) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_1, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_1, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. Á¤ºÎ´Â ¼®ÅºÈ­·Â¹ßÀü¼Ò Æó¼â¿¡ µû¸¥ ³ëµ¿ÀÚ °í¿ëºÒ¾È ÇØ¼Ò¿¡ \n ¾î´À Á¤µµ ³ë·ÂÇÏ°í ÀÖ´Ù°í »ı°¢ÇÕ´Ï±î?") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì •ë¶€ëŠ” ì„íƒ„í™”ë ¥ë°œì „ì†Œ íì‡„ì— ë”°ë¥¸ ë…¸ë™ì ê³ ìš©ë¶ˆì•ˆ í•´ì†Œì— \n ì–´ëŠ ì •ë„ ë…¸ë ¥í•˜ê³  ìˆë‹¤ê³  ìƒê°í•©ë‹ˆê¹Œ?") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -684,25 +685,25 @@ data %>%
   ggplot(aes(x = q7_4)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. Á¤ºÎÀÇ ¹Î°£±â¾÷ Áß½ÉÀÇ ¿¡³ÊÁö ÀüÈ¯Á¤Ã¥À¸·Î ÇâÈÄ Àü±â ¹Î¿µÈ­°¡ ¿ì·ÁµÈ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì •ë¶€ì˜ ë¯¼ê°„ê¸°ì—… ì¤‘ì‹¬ì˜ ì—ë„ˆì§€ ì „í™˜ì •ì±…ìœ¼ë¡œ í–¥í›„ ì „ê¸° ë¯¼ì˜í™”ê°€ ìš°ë ¤ëœë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_4) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_4) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_4, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_4, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. Á¤ºÎÀÇ ¹Î°£±â¾÷ Áß½ÉÀÇ ¿¡³ÊÁö ÀüÈ¯Á¤Ã¥À¸·Î ÇâÈÄ Àü±â ¹Î¿µÈ­°¡ ¿ì·ÁµÈ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì •ë¶€ì˜ ë¯¼ê°„ê¸°ì—… ì¤‘ì‹¬ì˜ ì—ë„ˆì§€ ì „í™˜ì •ì±…ìœ¼ë¡œ í–¥í›„ ì „ê¸° ë¯¼ì˜í™”ê°€ ìš°ë ¤ëœë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -714,25 +715,25 @@ data %>%
   ggplot(aes(x = q7_4_n2)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. Á¤ºÎÀÇ ¡®2030 NDC¡¯ ¸ñÇ¥ »óÇâ¿¡ µû¸¥ °í¿ëºÒ¾È ´ëÃ¥ µî ÀÏÀÚ¸® ÀüÈ¯Á¤Ã¥ ¸¶·ÃÀÌ ºÎÁ·ÇÏ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì •ë¶€ì˜ â€˜2030 NDCâ€™ ëª©í‘œ ìƒí–¥ì— ë”°ë¥¸ ê³ ìš©ë¶ˆì•ˆ ëŒ€ì±… ë“± ì¼ìë¦¬ ì „í™˜ì •ì±… ë§ˆë ¨ì´ ë¶€ì¡±í•˜ë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_4_n2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_4_n2) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_4_n2, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_4_n2, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. Á¤ºÎÀÇ ¡®2030 NDC¡¯ ¸ñÇ¥ »óÇâ¿¡ µû¸¥ °í¿ëºÒ¾È ´ëÃ¥ µî ÀÏÀÚ¸® ÀüÈ¯Á¤Ã¥ ¸¶·ÃÀÌ ºÎÁ·ÇÏ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì •ë¶€ì˜ â€˜2030 NDCâ€™ ëª©í‘œ ìƒí–¥ì— ë”°ë¥¸ ê³ ìš©ë¶ˆì•ˆ ëŒ€ì±… ë“± ì¼ìë¦¬ ì „í™˜ì •ì±… ë§ˆë ¨ì´ ë¶€ì¡±í•˜ë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -744,25 +745,25 @@ data %>%
   ggplot(aes(x = q7_4_n3)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. Á¤ºÎÀÇ Á¤Ã¥ °áÁ¤¿¡ ÀÖ¾î ÀÌÇØ´ç»çÀÚÀÎ ³ëÁ¶ÀÇ Âü¿©°¡ º¸ÀåµÇÁö ¾Ê´Â´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì •ë¶€ì˜ ì •ì±… ê²°ì •ì— ìˆì–´ ì´í•´ë‹¹ì‚¬ìì¸ ë…¸ì¡°ì˜ ì°¸ì—¬ê°€ ë³´ì¥ë˜ì§€ ì•ŠëŠ”ë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_4_n3) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_4_n3) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_4_n3, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_4_n3, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. Á¤ºÎÀÇ Á¤Ã¥ °áÁ¤¿¡ ÀÖ¾î ÀÌÇØ´ç»çÀÚÀÎ ³ëÁ¶ÀÇ Âü¿©°¡ º¸ÀåµÇÁö ¾Ê´Â´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì •ë¶€ì˜ ì •ì±… ê²°ì •ì— ìˆì–´ ì´í•´ë‹¹ì‚¬ìì¸ ë…¸ì¡°ì˜ ì°¸ì—¬ê°€ ë³´ì¥ë˜ì§€ ì•ŠëŠ”ë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -774,25 +775,25 @@ data %>%
   ggplot(aes(x = q7_7)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. »õ Á¤ºÎ°¡ ÃßÁøÇÒ ½ÅÇÑ¿ï 3¡¤4È£±â °Ç¼³ Àç°³ µî \n Å»¿øÀü ¹éÁöÈ­´Â Åº¼ÒÁß¸³ Á¤Ã¥¿¡ ÀÌ¹ÙÁöÇÒ °ÍÀÌ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ìƒˆ ì •ë¶€ê°€ ì¶”ì§„í•  ì‹ í•œìš¸ 3Â·4í˜¸ê¸° ê±´ì„¤ ì¬ê°œ ë“± \n íƒˆì›ì „ ë°±ì§€í™”ëŠ” íƒ„ì†Œì¤‘ë¦½ ì •ì±…ì— ì´ë°”ì§€í•  ê²ƒì´ë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_7) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_7) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_7, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_7, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. »õ Á¤ºÎ°¡ ÃßÁøÇÒ ½ÅÇÑ¿ï 3¡¤4È£±â °Ç¼³ Àç°³ µî \n Å»¿øÀü ¹éÁöÈ­´Â Åº¼ÒÁß¸³ Á¤Ã¥¿¡ ÀÌ¹ÙÁöÇÒ °ÍÀÌ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ìƒˆ ì •ë¶€ê°€ ì¶”ì§„í•  ì‹ í•œìš¸ 3Â·4í˜¸ê¸° ê±´ì„¤ ì¬ê°œ ë“± \n íƒˆì›ì „ ë°±ì§€í™”ëŠ” íƒ„ì†Œì¤‘ë¦½ ì •ì±…ì— ì´ë°”ì§€í•  ê²ƒì´ë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -804,25 +805,25 @@ data %>%
   ggplot(aes(x = q7_7_n2)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. »õ Á¤ºÎÇÏ¿¡¼­´Â ¼®ÅºÈ­·Â¹ßÀü¼Ò Æó¼â ½Ã±â¸¦ Á¶ÀıÇÒ °ÍÀ¸·Î ¿¹»óÇÑ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ìƒˆ ì •ë¶€í•˜ì—ì„œëŠ” ì„íƒ„í™”ë ¥ë°œì „ì†Œ íì‡„ ì‹œê¸°ë¥¼ ì¡°ì ˆí•  ê²ƒìœ¼ë¡œ ì˜ˆìƒí•œë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_7_n2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_7_n2) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_7_n2, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_7_n2, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. »õ Á¤ºÎÇÏ¿¡¼­´Â ¼®ÅºÈ­·Â¹ßÀü¼Ò Æó¼â ½Ã±â¸¦ Á¶ÀıÇÒ °ÍÀ¸·Î ¿¹»óÇÑ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ìƒˆ ì •ë¶€í•˜ì—ì„œëŠ” ì„íƒ„í™”ë ¥ë°œì „ì†Œ íì‡„ ì‹œê¸°ë¥¼ ì¡°ì ˆí•  ê²ƒìœ¼ë¡œ ì˜ˆìƒí•œë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -830,30 +831,30 @@ data %>%
         legend.position = "bottom") +
   guides(color = guide_legend(label.position = "bottom"))
 
-### È¸»ç
+### íšŒì‚¬
 data %>%
   ggplot(aes(x = q7_2)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. ±ÍÇÏ°¡ ¼Ò¼ÓµÈ È¸»ç´Â ¼®ÅºÈ­·Â¹ßÀü¼Ò Æó¼â¿¡ µû¸¥ \n ³ëµ¿ÀÚ °í¿ëºÒ¾È ÇØ¼Ò¿¡ ¾î´À Á¤µµ ³ë·ÂÇÏ°í ÀÖ´Ù°í »ı°¢ÇÕ´Ï±î?") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ê·€í•˜ê°€ ì†Œì†ëœ íšŒì‚¬ëŠ” ì„íƒ„í™”ë ¥ë°œì „ì†Œ íì‡„ì— ë”°ë¥¸ \n ë…¸ë™ì ê³ ìš©ë¶ˆì•ˆ í•´ì†Œì— ì–´ëŠ ì •ë„ ë…¸ë ¥í•˜ê³  ìˆë‹¤ê³  ìƒê°í•©ë‹ˆê¹Œ?") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_2) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_2, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_2, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. ±ÍÇÏ°¡ ¼Ò¼ÓµÈ È¸»ç´Â ¼®ÅºÈ­·Â¹ßÀü¼Ò Æó¼â¿¡ µû¸¥ \n ³ëµ¿ÀÚ °í¿ëºÒ¾È ÇØ¼Ò¿¡ ¾î´À Á¤µµ ³ë·ÂÇÏ°í ÀÖ´Ù°í »ı°¢ÇÕ´Ï±î?") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ê·€í•˜ê°€ ì†Œì†ëœ íšŒì‚¬ëŠ” ì„íƒ„í™”ë ¥ë°œì „ì†Œ íì‡„ì— ë”°ë¥¸ \n ë…¸ë™ì ê³ ìš©ë¶ˆì•ˆ í•´ì†Œì— ì–´ëŠ ì •ë„ ë…¸ë ¥í•˜ê³  ìˆë‹¤ê³  ìƒê°í•©ë‹ˆê¹Œ?") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -865,25 +866,25 @@ data %>%
   ggplot(aes(x = q7_5)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. »çÃøÀº ¹ßÀü¼Ò Æó¼â¿¡ ´ëºñÇØ ³ëµ¿ÀÚ º¸È£¸¦ À§ÇØ ³ë·ÂÇÏ°í ÀÖ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì‚¬ì¸¡ì€ ë°œì „ì†Œ íì‡„ì— ëŒ€ë¹„í•´ ë…¸ë™ì ë³´í˜¸ë¥¼ ìœ„í•´ ë…¸ë ¥í•˜ê³  ìˆë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_5) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_5) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_5, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_5, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. »çÃøÀº ¹ßÀü¼Ò Æó¼â¿¡ ´ëºñÇØ ³ëµ¿ÀÚ º¸È£¸¦ À§ÇØ ³ë·ÂÇÏ°í ÀÖ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì‚¬ì¸¡ì€ ë°œì „ì†Œ íì‡„ì— ëŒ€ë¹„í•´ ë…¸ë™ì ë³´í˜¸ë¥¼ ìœ„í•´ ë…¸ë ¥í•˜ê³  ìˆë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -895,25 +896,25 @@ data %>%
   ggplot(aes(x = q7_5_n2)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. »çÃøÀº Àç»ı¿¡³ÊÁö ºĞ¾ß µî »õ·Î¿î ÀÏÀÚ¸® Ã¢ÃâÀ» À§ÇØ ³ë·ÂÇÏ°í ÀÖ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì‚¬ì¸¡ì€ ì¬ìƒì—ë„ˆì§€ ë¶„ì•¼ ë“± ìƒˆë¡œìš´ ì¼ìë¦¬ ì°½ì¶œì„ ìœ„í•´ ë…¸ë ¥í•˜ê³  ìˆë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_5_n2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_5_n2) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_5_n2, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_5_n2, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. »çÃøÀº Àç»ı¿¡³ÊÁö ºĞ¾ß µî »õ·Î¿î ÀÏÀÚ¸® Ã¢ÃâÀ» À§ÇØ ³ë·ÂÇÏ°í ÀÖ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ì‚¬ì¸¡ì€ ì¬ìƒì—ë„ˆì§€ ë¶„ì•¼ ë“± ìƒˆë¡œìš´ ì¼ìë¦¬ ì°½ì¶œì„ ìœ„í•´ ë…¸ë ¥í•˜ê³  ìˆë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -927,25 +928,25 @@ data %>%
   ggplot(aes(x = q7_5_n3)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. ÇâÈÄ ¿¹»óµÇ´Â ¹ßÀü¼Ò Æó¼â¿Í °ü·Ã ³ëµ¿Á¶ÇÕ°úÀÇ ÇùÀÇ°¡ ¿ø¸¸ÇÏ°Ô ÁøÇàµÇ°í ÀÖ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. í–¥í›„ ì˜ˆìƒë˜ëŠ” ë°œì „ì†Œ íì‡„ì™€ ê´€ë ¨ ë…¸ë™ì¡°í•©ê³¼ì˜ í˜‘ì˜ê°€ ì›ë§Œí•˜ê²Œ ì§„í–‰ë˜ê³  ìˆë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_5_n3) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_5_n3) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_5_n3, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_5_n3, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. ÇâÈÄ ¿¹»óµÇ´Â ¹ßÀü¼Ò Æó¼â¿Í °ü·Ã ³ëµ¿Á¶ÇÕ°úÀÇ ÇùÀÇ°¡ ¿ø¸¸ÇÏ°Ô ÁøÇàµÇ°í ÀÖ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. í–¥í›„ ì˜ˆìƒë˜ëŠ” ë°œì „ì†Œ íì‡„ì™€ ê´€ë ¨ ë…¸ë™ì¡°í•©ê³¼ì˜ í˜‘ì˜ê°€ ì›ë§Œí•˜ê²Œ ì§„í–‰ë˜ê³  ìˆë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -961,25 +962,25 @@ data %>%
   ggplot(aes(x = q7_3)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. ±ÍÇÏ°¡ ¼Ò¼ÓµÈ ³ëµ¿Á¶ÇÕÀº ¼®ÅºÈ­·Â¹ßÀü¼Ò Æó¼â¿¡ µû¸¥ \n ³ëµ¿ÀÚ °í¿ëºÒ¾È ÇØ¼Ò¿¡ ¾î´À Á¤µµ ³ë·ÂÇÏ°í ÀÖ´Ù°í »ı°¢ÇÕ´Ï±î?") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ê·€í•˜ê°€ ì†Œì†ëœ ë…¸ë™ì¡°í•©ì€ ì„íƒ„í™”ë ¥ë°œì „ì†Œ íì‡„ì— ë”°ë¥¸ \n ë…¸ë™ì ê³ ìš©ë¶ˆì•ˆ í•´ì†Œì— ì–´ëŠ ì •ë„ ë…¸ë ¥í•˜ê³  ìˆë‹¤ê³  ìƒê°í•©ë‹ˆê¹Œ?") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_3) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_3) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_3, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_3, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. ±ÍÇÏ°¡ ¼Ò¼ÓµÈ ³ëµ¿Á¶ÇÕÀº ¼®ÅºÈ­·Â¹ßÀü¼Ò Æó¼â¿¡ µû¸¥ \n ³ëµ¿ÀÚ °í¿ëºÒ¾È ÇØ¼Ò¿¡ ¾î´À Á¤µµ ³ë·ÂÇÏ°í ÀÖ´Ù°í »ı°¢ÇÕ´Ï±î?") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ê·€í•˜ê°€ ì†Œì†ëœ ë…¸ë™ì¡°í•©ì€ ì„íƒ„í™”ë ¥ë°œì „ì†Œ íì‡„ì— ë”°ë¥¸ \n ë…¸ë™ì ê³ ìš©ë¶ˆì•ˆ í•´ì†Œì— ì–´ëŠ ì •ë„ ë…¸ë ¥í•˜ê³  ìˆë‹¤ê³  ìƒê°í•©ë‹ˆê¹Œ?") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -991,25 +992,25 @@ data %>%
   ggplot(aes(x = q7_6)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. ³ëÁ¶´Â ¹ßÀü¼Ò Æó¼â¿¡ ´ëºñÇÏ¿© ³ëµ¿ÀÚ º¸È£¸¦ À§ÇØ »çÃø°ú ±ä¹ĞÈ÷ ÇùÀÇÇÏ°í ÀÖ´Ù") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ë…¸ì¡°ëŠ” ë°œì „ì†Œ íì‡„ì— ëŒ€ë¹„í•˜ì—¬ ë…¸ë™ì ë³´í˜¸ë¥¼ ìœ„í•´ ì‚¬ì¸¡ê³¼ ê¸´ë°€íˆ í˜‘ì˜í•˜ê³  ìˆë‹¤") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_6) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_6) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_6, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_6, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. ³ëÁ¶´Â ¹ßÀü¼Ò Æó¼â¿¡ ´ëºñÇÏ¿© ³ëµ¿ÀÚ º¸È£¸¦ À§ÇØ »çÃø°ú ±ä¹ĞÈ÷ ÇùÀÇÇÏ°í ÀÖ´Ù") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ë…¸ì¡°ëŠ” ë°œì „ì†Œ íì‡„ì— ëŒ€ë¹„í•˜ì—¬ ë…¸ë™ì ë³´í˜¸ë¥¼ ìœ„í•´ ì‚¬ì¸¡ê³¼ ê¸´ë°€íˆ í˜‘ì˜í•˜ê³  ìˆë‹¤") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -1022,25 +1023,25 @@ data %>%
   ggplot(aes(x = q7_6_n2)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. ³ëÁ¶´Â ¹ßÀü¼Ò Æó¼â¿¡ µû¸¥ ´ëÀÀ°èÈ¹¿¡ °üÇÑ Á¤º¸¸¦ °øÀ¯ÇÏ°í ÀÖ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ë…¸ì¡°ëŠ” ë°œì „ì†Œ íì‡„ì— ë”°ë¥¸ ëŒ€ì‘ê³„íšì— ê´€í•œ ì •ë³´ë¥¼ ê³µìœ í•˜ê³  ìˆë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_6_n2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_6_n2) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_6_n2, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_6_n2, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. ³ëÁ¶´Â ¹ßÀü¼Ò Æó¼â¿¡ µû¸¥ ´ëÀÀ°èÈ¹¿¡ °üÇÑ Á¤º¸¸¦ °øÀ¯ÇÏ°í ÀÖ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ë…¸ì¡°ëŠ” ë°œì „ì†Œ íì‡„ì— ë”°ë¥¸ ëŒ€ì‘ê³„íšì— ê´€í•œ ì •ë³´ë¥¼ ê³µìœ í•˜ê³  ìˆë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -1052,25 +1053,25 @@ data %>%
   ggplot(aes(x = q7_6_n3)) + 
   geom_bar(width = 0.5, fill = "blue", colour = "black", aes(y = ..prop.., group = 1)) +
   geom_text(aes(y = ((..count..)/sum(..count..)), label = scales::percent((..count..)/sum(..count..))), stat = "count", vjust = -0.25) +
-  ggtitle("Q. ¹ßÀü¼Ò Æó¼â¿¡ µû¸¥ ´ëÀÀÀ» ÇâÈÄ ³ëÁ¶ÀÇ ÇÙ½É »ç¾÷À¸·Î ¹èÄ¡ÇÒ ÇÊ¿ä¼ºÀÌ ÀÖ´Ù°í »ı°¢ÇÑ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ë°œì „ì†Œ íì‡„ì— ë”°ë¥¸ ëŒ€ì‘ì„ í–¥í›„ ë…¸ì¡°ì˜ í•µì‹¬ ì‚¬ì—…ìœ¼ë¡œ ë°°ì¹˜í•  í•„ìš”ì„±ì´ ìˆë‹¤ê³  ìƒê°í•œë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 13))
 
 data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_6_n3) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_6_n3) %>%
   summarise(total = n()) %>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total)) %>%
-  ggplot(aes(x = q7_6_n3, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_6_n3, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. ¹ßÀü¼Ò Æó¼â¿¡ µû¸¥ ´ëÀÀÀ» ÇâÈÄ ³ëÁ¶ÀÇ ÇÙ½É »ç¾÷À¸·Î ¹èÄ¡ÇÒ ÇÊ¿ä¼ºÀÌ ÀÖ´Ù°í »ı°¢ÇÑ´Ù.") +
-  scale_x_continuous(breaks = c(1:5), label = c("ÀüÇô ±×·¸Áö ¾Ê´Ù", "±×·¸Áö ¾Ê´Ù", "±×·¸´Ù", "¸Å¿ì ±×·¸´Ù", "¸ğ¸£°Ú´Ù")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ë°œì „ì†Œ íì‡„ì— ë”°ë¥¸ ëŒ€ì‘ì„ í–¥í›„ ë…¸ì¡°ì˜ í•µì‹¬ ì‚¬ì—…ìœ¼ë¡œ ë°°ì¹˜í•  í•„ìš”ì„±ì´ ìˆë‹¤ê³  ìƒê°í•œë‹¤.") +
+  scale_x_continuous(breaks = c(1:5), label = c("ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ì§€ ì•Šë‹¤", "ê·¸ë ‡ë‹¤", "ë§¤ìš° ê·¸ë ‡ë‹¤", "ëª¨ë¥´ê² ë‹¤")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
@@ -1081,16 +1082,16 @@ data %>%
 
 ### Q7_8
 data1 <- data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_8) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_8) %>%
   summarise(total = n())
 
 data2 <- data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_8_m2) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_8_m2) %>%
   summarise(total = n()) %>%
   rename("q7_8" = "q7_8_m2")
 
 data3 <- data %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_8_m3) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_8_m3) %>%
   summarise(total = n()) %>%
   rename("q7_8" = "q7_8_m3")
 
@@ -1109,25 +1110,25 @@ data7_8_sum %>%
   ggplot(aes(x = q7_8, y = pct)) +
   geom_bar(stat = "identity", fill = "blue", colour = "black") + 
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.25) +
-  ggtitle("Q. ±âÈÄ À§±â ´ëÀÀÁ¤Ã¥°ú °ü·ÃÇÏ¿© ±ÍÇÏ°¡ ¼ÓÇÑ ³ëµ¿Á¶ÇÕÀÌ ÁÖ·ÂÇØ¾ß ÇÒ Á¤Ã¥ Áß \n °¡Àå ¿ì¼±ÀûÀÌ¶ó°í »ı°¢ÇÏ´Â Á¤Ã¥ ¼¼ °³¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä.") +
-  scale_x_continuous(breaks = c(1:8), labels = c("½Ã¹Î´ÜÃ¼¿ÍÀÇ ¿¬´ë", "ÀüÈ¯¹èÄ¡ Á¶°Ç ¸¶·Ã", "°í¿ëº¸ÀåÇùÀÇ Ã¼°á", "±âÈÄÀ§±â Á¤Ã¥ °³¹ß", "Á¤ºÎ¿Í »çÈ¸Àû ´ëÈ­", "¾ğ·Ğ È«º¸È°µ¿", "¹ßÀü°ø±â¾÷ ÅëÇÕ ÃßÁø", "³ëµ¿Á¶ÇÕ ¿¬´ë")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ê¸°í›„ ìœ„ê¸° ëŒ€ì‘ì •ì±…ê³¼ ê´€ë ¨í•˜ì—¬ ê·€í•˜ê°€ ì†í•œ ë…¸ë™ì¡°í•©ì´ ì£¼ë ¥í•´ì•¼ í•  ì •ì±… ì¤‘ \n ê°€ì¥ ìš°ì„ ì ì´ë¼ê³  ìƒê°í•˜ëŠ” ì •ì±… ì„¸ ê°œë¥¼ ì„ íƒí•´ ì£¼ì„¸ìš”.") +
+  scale_x_continuous(breaks = c(1:8), labels = c("ì‹œë¯¼ë‹¨ì²´ì™€ì˜ ì—°ëŒ€", "ì „í™˜ë°°ì¹˜ ì¡°ê±´ ë§ˆë ¨", "ê³ ìš©ë³´ì¥í˜‘ì˜ ì²´ê²°", "ê¸°í›„ìœ„ê¸° ì •ì±… ê°œë°œ", "ì •ë¶€ì™€ ì‚¬íšŒì  ëŒ€í™”", "ì–¸ë¡  í™ë³´í™œë™", "ë°œì „ê³µê¸°ì—… í†µí•© ì¶”ì§„", "ë…¸ë™ì¡°í•© ì—°ëŒ€")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
         axis.text = element_text(size = 10))
 
 data7_8 %>% 
-  group_by(¼Ò¼ÓÈ¸»ç, q7_8) %>%
+  group_by(ì†Œì†íšŒì‚¬, q7_8) %>%
   summarise(total = sum(total))%>%
-  group_by(¼Ò¼ÓÈ¸»ç) %>%
+  group_by(ì†Œì†íšŒì‚¬) %>%
   mutate(pct = total / sum(total))%>%
-  ggplot(aes(x = q7_8, y = pct, color = ¼Ò¼ÓÈ¸»ç)) +
+  ggplot(aes(x = q7_8, y = pct, color = ì†Œì†íšŒì‚¬)) +
   geom_line() + geom_point() +
   geom_text(aes(y = pct, label = scales::percent(pct)), vjust = -0.3) +
-  ggtitle("Q. ±âÈÄ À§±â ´ëÀÀÁ¤Ã¥°ú °ü·ÃÇÏ¿© ±ÍÇÏ°¡ ¼ÓÇÑ ³ëµ¿Á¶ÇÕÀÌ ÁÖ·ÂÇØ¾ß ÇÒ Á¤Ã¥ Áß \n °¡Àå ¿ì¼±ÀûÀÌ¶ó°í »ı°¢ÇÏ´Â Á¤Ã¥ ¼¼ °³¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä.") +
-  scale_x_continuous(breaks = c(1:8), labels = c("½Ã¹Î´ÜÃ¼¿ÍÀÇ ¿¬´ë", "ÀüÈ¯¹èÄ¡ Á¶°Ç ¸¶·Ã", "°í¿ëº¸ÀåÇùÀÇ Ã¼°á", "±âÈÄÀ§±â Á¤Ã¥ °³¹ß", "Á¤ºÎ¿Í »çÈ¸Àû ´ëÈ­", "¾ğ·Ğ È«º¸È°µ¿", "¹ßÀü°ø±â¾÷ ÅëÇÕ ÃßÁø", "³ëµ¿Á¶ÇÕ ¿¬´ë")) +
-  labs(x = "", y = " ºñÀ²") + 
+  ggtitle("Q. ê¸°í›„ ìœ„ê¸° ëŒ€ì‘ì •ì±…ê³¼ ê´€ë ¨í•˜ì—¬ ê·€í•˜ê°€ ì†í•œ ë…¸ë™ì¡°í•©ì´ ì£¼ë ¥í•´ì•¼ í•  ì •ì±… ì¤‘ \n ê°€ì¥ ìš°ì„ ì ì´ë¼ê³  ìƒê°í•˜ëŠ” ì •ì±… ì„¸ ê°œë¥¼ ì„ íƒí•´ ì£¼ì„¸ìš”.") +
+  scale_x_continuous(breaks = c(1:8), labels = c("ì‹œë¯¼ë‹¨ì²´ì™€ì˜ ì—°ëŒ€", "ì „í™˜ë°°ì¹˜ ì¡°ê±´ ë§ˆë ¨", "ê³ ìš©ë³´ì¥í˜‘ì˜ ì²´ê²°", "ê¸°í›„ìœ„ê¸° ì •ì±… ê°œë°œ", "ì •ë¶€ì™€ ì‚¬íšŒì  ëŒ€í™”", "ì–¸ë¡  í™ë³´í™œë™", "ë°œì „ê³µê¸°ì—… í†µí•© ì¶”ì§„", "ë…¸ë™ì¡°í•© ì—°ëŒ€")) +
+  labs(x = "", y = " ë¹„ìœ¨") + 
   theme_bw() +
   theme(plot.title = element_text(size = 17, hjust = 0.5 ,face = "bold"),
         axis.title = element_text(size = 15),
