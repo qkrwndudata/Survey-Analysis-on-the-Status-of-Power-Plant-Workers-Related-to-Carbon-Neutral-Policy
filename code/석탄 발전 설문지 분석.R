@@ -1,11 +1,6 @@
-#install.packages("lavaan")
-#install.packages("semTools")
-#install.packages("psych")
-#install.packages("semPlot")
-#install.packages("readr")
-#install.packages("stargazer")
-#install.packages("nparcomp")
+## 설문지 응답 내용을 바탕으로 비모수 ANOVA 검정 및 SEM 분석을 진행한 코드입니다.
 
+# 라이브러리 호출
 library(FSA)
 library(ggplot2)
 library(dplyr)
@@ -20,11 +15,13 @@ library(knitr)
 library(stargazer)
 library(gridExtra)
 
+# 데이터 불러오기
 data <- read.csv("C:/Users/Park JuYoung/Desktop/survey_data.csv", header = T, fileEncoding = "euc-kr")
 summary(data)
 table(data$q7_7)
 table(data$q7_7_n2)
 
+# EDA: dplyr 데이터 요약
 data %>% 
   filter(q7_7 == 4, q7_7_n2 == 4) %>%
   summarize(count = n(),
@@ -48,9 +45,7 @@ data %>%
 
 0.1099585 + 0.07624481 + 0.04875519 + 0.2173237   # 약 34.5% 정도가 잘 모른 상태에서 답변함
 
-
-View(data)
-
+# EDA: 데이터 요약
 Summarize(q5_2 ~ 성별, data)
 Summarize(q5_2 ~ 연령대, data)
 Summarize(q5_2 ~ 학력, data)
@@ -62,6 +57,7 @@ Summarize(q5_2 ~ 직종, data)
 
 Summarize(q5_2 ~ 소속회사 + 근무처, data)   # 한 번에 확인 가능
 
+# EDA: 데이터 
 ggbarplot(data, x = "소속회사", y = "q5_2", 
           add = c("mean_ci"), fill = "소속회사", legend = "bottom", ylab = "응답 평균")
 
@@ -214,11 +210,12 @@ dunn.test(data$q5_2, data$학력, method = 'bonferroni')   # 전문대 졸업이
 nparcomp::nparcomp(q5_2 ~ 학력, data = data, type = "Tukey")
 
 
+##########################################
+###               SEM                  ###
+##########################################
 
-########## SEM ###########################
 data$소속회사 <- as.factor(data$소속회사)
 
-# 모르겠습니다를 어떻게 처리할 지 (보통이다로 대체하자): 3, 4 -> 4, 5 / 5 -> 3
 data[data$q2_1 == 5, "q2_1"] = 6
 data[data$q2_1 == 4, "q2_1"] = 5
 data[data$q2_1 == 3, "q2_1"] = 4
